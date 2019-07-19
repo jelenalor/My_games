@@ -19,7 +19,7 @@ class Game():
     
     def makeHumanMove(self, available_cols):
         while True:
-            move = int(input("%s Choose column between 0 and 6" %self.player))
+            move = int(input("%s Choose column between 0 and 6: " %self.player))
             if move in available_cols:
                 print("Move accepted")
                 break
@@ -41,6 +41,11 @@ class Game():
             # find available columns to play
             available_moves = grid.availableMoves()
             # get a move
+            # if list of moves is empty -> draw
+            if len(available_moves) == 0:
+                print("It is a draw")
+                break
+                
             column = self.makeHumanMove(available_moves)
             #return an available row for a choosen column
             row = grid.returnRow(column)
@@ -49,6 +54,7 @@ class Game():
             grid.updateGrid(move, self.player)
             grid.displayGrid()
             self.win = grid.checkWin(move)[0]
+            print(self.win)
             if self.win == True:
                 self.winner = grid.checkWin(move)[1]
                 print("Winner is ", self.winner)
@@ -202,6 +208,7 @@ class Env():
                 return win, "no winner"
                 
         return win, "no winner"
+            
     
 if __name__ == '__main__':
     g = Game()
